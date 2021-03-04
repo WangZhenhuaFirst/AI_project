@@ -1,0 +1,26 @@
+.navbar{
+    background: #000;
+    color:#fff;
+}
+.navbar-default .navbar-brand{
+    color: #fff;
+}
+.navbar-default .navbar-nav>li>a{
+    color:#fff;
+}
+.nav {
+    margin-left: 10%;
+}
+.navbar{
+    border:none;
+}
+.ant-button {
+    padding: 20px;
+}
+.mytextarea{
+    width: 100%; 
+    overflow: auto;
+    word-break: 
+    break-all; 
+    resize: none;
+}

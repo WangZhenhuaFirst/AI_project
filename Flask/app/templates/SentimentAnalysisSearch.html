@@ -1,0 +1,39 @@
+{% extends "Base.html" %}
+
+{% block scripts %}
+{{ super() }}
+<script src="{{ url_for('static',filename='message.js') }}"></script>
+<script src="{{ url_for('static',filename='SentimentAnalysisSearch.js') }}"></script>
+<script src="{{ url_for('static',filename='echarts.min.js') }}"></script>
+<script src="{{ url_for('static',filename='bootstrap-table.min.js') }}"></script>
+<script src="{{ url_for('static',filename='bootstrap-table-zh-CN.min.js') }}"></script>
+{% endblock %}
+
+{% block styles %}
+{{ super() }}
+<link href="{{ url_for("static",filename="SentimentAnalysisSearch.css") }}" rel="stylesheet" type="text/css" />
+<link href="{{ url_for("static",filename="bootstrap-table.min.css") }}" rel="stylesheet" type="text/css" />
+{% endblock %}
+
+{% block my_content %}
+<div class="container">
+  <div class="panel panel-default">
+    <div class="panel-heading">查询条件</div>
+    <div class="panel-body">
+      <form id="formSearch" class="form-horizontal">
+        <div class="form-group" style="margin-top:15px">
+          <label class="control-label col-sm-1" for="KeyWord">关键字</label>
+          <div class="col-sm-6">
+            <input type="text" class="form-control" id="KeyWord">
+          </div>
+          <div class="col-sm-4" style="text-align:left;">
+            <button type="button" style="margin-left:50px" id="btn_query"  class="btn btn-primary" onclick="LoadData()">查询</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  <table id="SentimentSearch" class="table" style="width:1100px;">
+  </table>
+</div>
+{% endblock %}

@@ -1,0 +1,66 @@
+{% extends "Base.html" %}
+
+{% block scripts %}
+{{ super() }}
+<script src="{{ url_for('static',filename='message.js') }}"></script>
+<script src="{{ url_for('static',filename='SentimentAnalysis.js') }}"></script>
+<script src="{{ url_for('static',filename='echarts.min.js') }}"></script>
+<script src="{{ url_for('static',filename='bootstrap-table.min.js') }}"></script>
+<script src="{{ url_for('static',filename='bootstrap-table-zh-CN.min.js') }}"></script>
+{% endblock %}
+
+{% block styles %}
+{{ super() }}
+<link href="{{ url_for("static",filename="SentimentAnalysis.css") }}" rel="stylesheet" type="text/css" />
+<link href="{{ url_for("static",filename="bootstrap-table.min.css") }}" rel="stylesheet" type="text/css" />
+{% endblock %}
+
+{% block my_content %}
+<div class="container">
+  <div class="row" style="padding:0">
+    <div class="panel panel-primary col-md-4">
+      <div class="panel-heading" style="width: 100%;">
+        <h3 class="panel-title">舆情总量</h3>
+      </div>
+      <div class="panel-body">
+        <h1 id="TotalSentiment" style="text-align: right;">0</h1>
+      </div>
+    </div>
+
+    <div class="panel panel-danger col-md-4">
+      <div class="panel-heading">
+        <h3 class="panel-title">负面舆情</h3>
+      </div>
+      <div class="panel-body">
+        <h1 id="NegativeSentiment" style="text-align: right;">0</h1>
+      </div>
+    </div>
+    <div class="panel panel-success col-md-4">
+      <div class="panel-heading">
+        <h3 class="panel-title">正面舆情</h3>
+      </div>
+      <div class="panel-body">
+        <h1 id="PositiveSentiment" style="text-align: right;">0</h1>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="panel panel-primary col-md-6">
+      <div id="container1" class="form-group" style="height:350px;"></div>
+    </div>
+    <div class="panel panel-primary col-md-6">
+      <div id="container2" class="form-group" style="height:350px;"></div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="panel panel-primary col-md-12" style="height:740px;">
+      <!-- Default panel contents -->
+      <h4 id="PositiveSentiment" style="text-align: left; "><b>最新舆情 TOP5</b></h4>
+
+      <table id="RecentSentiment" class="table" style="width:1100px;">
+      </table>
+    </div>
+  </div>
+</div>
+{% endblock %}

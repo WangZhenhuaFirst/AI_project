@@ -1,0 +1,14 @@
+/auto_monitoring/train_model/Sentiment_Classification/chinese_L-12_H-768_A-12/*
+/auto_monitoring/train_model/Sentiment_Classification/train_data/bert_train.csv
+/auto_monitoring/train_model/Sentiment_Classification/train_data/bert_valid.csv
+/auto_monitoring/train_model/Sentiment_Classification/yf_dianping/ratings.csv
+
+/auto_monitoring/train_model/Sentiment_Classification/chinese_stopwords.txt
+/auto_monitoring/train_model/Sentiment_Classification/ratings_data.txt
+/auto_monitoring/train_model/Sentiment_Classification/seg_ratings_data.txt
+/auto_monitoring/train_model/Sentiment_Classification/2_svc_model.pkl
+/auto_monitoring/train_model/Sentiment_Classification/3_rfc_model.pkl
+/auto_monitoring/train_model/Sentiment_Classification/4_mnb_model.pkl
+
+/auto_monitoring/WebCrawler/dazhong.txt
+/auto_monitoring/WebCrawler/dianping_insert.ipynb
