@@ -44,8 +44,8 @@ class NewsData(object):
     @staticmethod
     def GetNewData():
         # 随机获取ID
-        # id = random.randint(0, len(NewsData.news_content_list) - 1)
-        id = 10
+        id = random.randint(0, len(NewsData.news_content_list) - 1)
+        # id = 10
         org = NewsData.news_content_list[id]
         # 处理文章中的\n字符
         NewsContent = str(org).replace('\\n', '')

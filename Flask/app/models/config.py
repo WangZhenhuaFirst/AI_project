@@ -103,6 +103,6 @@ class Config(object):
     GPUEnable = False
 
     # 启用爬虫
-    WebCrawlerEnable = True
+    WebCrawlerEnable = False
     # 启用数据处理
     ProcessDataEnable = False
