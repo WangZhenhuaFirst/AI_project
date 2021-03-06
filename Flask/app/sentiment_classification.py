@@ -6,7 +6,7 @@ import codecs
 import gc
 import numpy as np
 from sklearn.model_selection import KFold
-from keras_bert import load_trained_model_from_checkpoint, Tokenizer
+from keras_bert import Tokenizer
 from keras.metrics import top_k_categorical_accuracy
 from keras.layers import *
 from keras.callbacks import *
@@ -32,10 +32,10 @@ class SentimentClassification(object):
     @staticmethod
     def Init():
 
-        #GPU
+        # GPU
         if Config.GPUEnable == False:
             os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
-        
+
         # 获取新的tokenizer
         if SentimentClassification.tokenizer is None:
             SentimentClassification.tokenizer = OurTokenizer(

@@ -5,8 +5,6 @@ from wtforms import StringField, IntegerField
 from wtforms.validators import data_required, Length
 from app.models.config import Config
 
-# 新闻form
-
 
 class NewsForm(FlaskForm):
     NewsTitle = StringField(u"标题")
