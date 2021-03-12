@@ -21,16 +21,16 @@ def metrics_result(y_test, y_pred, predict_prod):
     # average: This parameter is required for multiclass/multilabel targets.
     # If None, the scores for each class are returned. Otherwise, this determines the type of averaging performed on the data
     # weighted: Calculate metrics for each label, and find their average weighted by support
+    accuracy_scores = accuracy_score(y_test, y_pred)
     precision_scores = precision_score(y_test, y_pred, average='weighted')
     recall_scores = recall_score(y_test, y_pred, average='weighted')
     f1_scores = f1_score(y_test, y_pred, average='weighted')
-    accuracy_scores = accuracy_score(y_test, y_pred)
     fpr, tpr, threshold = roc_curve(y_test, predict_prod)
     auc_scores = auc(fpr, tpr)
+    print('准确率:{0:.3f}'.format(accuracy_scores))
     print('精确率:{0:.3f}'.format(precision_scores))
     print('召回率:{0:0.3f}'.format(recall_scores))
     print('f1-score:{0:.3f}'.format(f1_scores))
-    print('准确率:{0:.3f}'.format(accuracy_scores))
     print('AUC:{0:.3f}'.format(auc_scores))
     return precision_scores, recall_scores, f1_scores, auc_scores, accuracy_scores
 

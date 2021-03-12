@@ -36,7 +36,7 @@ def cut_text(text):
 
 
 def read_ratings_data():
-    '''读取新闻数据函数'''
+    '''读取评论数据'''
     print('开始读取文件')
     # 用pd.read_csv方法读取语料
     pd_ratings = pd.read_csv('yf_dianping/ratings.csv')

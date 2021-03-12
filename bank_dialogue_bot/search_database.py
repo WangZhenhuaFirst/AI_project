@@ -50,12 +50,14 @@ class SearchDataBase:
     def build_index(self, tree_num=500):
         # 自定义的 读取word2vec的函数
         items_vec = pickle.load(open(self.dict_name, "rb"))
+        # Annoy: to search for points in space that are close to a given query point.
+        # nearest neighbor search
         # 向量维度为768
         a = AnnoyIndex(768, metric='angular')
         i = 0
         id2word, word2id = dict(), dict()
         for word in items_vec.keys():
-            a.add_item(i, items_vec[word])
+            a.add_item(i, items_vec[word])  # 添加的元素是 句子的embedding
             id2word[i] = word
             word2id[word] = i
             i += 1

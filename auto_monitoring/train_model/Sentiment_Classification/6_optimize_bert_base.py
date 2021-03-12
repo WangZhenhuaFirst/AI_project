@@ -57,7 +57,7 @@ def get_train_test_data():
 
 def get_token_dict():
     """
-    将词表中的字编号 转换为字典
+    将词表中的字+ 编号/行号 转换为字典————字:行号
     :return: 返回 自编码字典
     参考：https://github.com/CyberZHG/keras-bert
     """
@@ -78,10 +78,10 @@ class OurTokenizer(Tokenizer):
 
     def _tokenize(self, text):
         '''
-        本来Tokenizer有自己的_tokenize方法，这里重写了这个方法，是要保证tokenize之后的结果，跟原来的字符串长度等长（如果算上两个标记，就是等长再加2）。
+        本来Tokenizer有自己的_tokenize方法，这里重写了这个方法，是要保证tokenize之后的结果，跟原来的字符串等长（如果算上两个标记，就是等长再加2）。
         Tokenizer自带的_tokenize会自动去掉空格，然后有些字符会粘在一块输出，导致tokenize之后的列表不等于原来字符串的长度了，这样如果做序列标注的任务会很麻烦。
-        而为了避免这种麻烦，还是自己重写一遍好了～主要就是用[unused1]来表示空格类字符，而其余的不在列表的字符用[UNK]表示，
-        其中[unused*]这些标记是未经训练的（随即初始化），是Bert预留出来用来增量添加词汇的标记，所以我们可以用它们来指代任何新字符。
+        为了避免这种麻烦，还是自己重写一遍好了～主要就是用[unused1]来表示空格类字符，而其余的不在列表的字符用[UNK]表示，
+        其中[unused*]这些标记是未经训练的（随机初始化），是Bert预留出来用来增量添加词汇的标记，所以我们可以用它们来指代任何新字符。
         '''
         R = []
         for c in text:
@@ -180,11 +180,15 @@ def build_bert(nclass):
     # 如果你要做序列标注（比如NER），那你就接个Dense+CRF就好，也不要多加其他东西。
     # 总之，额外加的东西尽可能少。一是因为Bert本身就足够复杂，它有足够能力应对你要做的很多任务；
     # 二来你自己加的层都是随机初始化的，加太多会对Bert的预训练权重造成剧烈扰动，容易降低效果甚至造成模型不收敛
-    x = bert_model([x1_in, x2_in])  # 这里x1_in，x2_in 作为bert_model的输入是什么意思？
+
+    # 这里x1_in，x2_in 作为bert_model的输入是什么意思？引入了Bert作为编码器
+    x = bert_model([x1_in, x2_in])
     # Wraps arbitrary expressions as a Layer object.
     x = Lambda(lambda x: x[:, 0])(x)  # 取出[CLS]对应的向量 用来做分类
     p = Dense(nclass, activation='softmax')(x)
-    # ??? model 和 bert model 有没有接到一起？？？
+    # 参考：https://keras.io/api/models/model/#model-class
+    # Model groups layers into an object with training and inference features.
+    # 只需要将输入层和输出层作为参数，
     model = Model([x1_in, x2_in], p)
     model.compile(loss='categorical_crossentropy',
                   optimizer=Adam(1e-5),  # 用足够小的学习率
@@ -205,7 +209,7 @@ def train_model():
     early_stopping = EarlyStopping(
         monitor='val_accuracy', patience=3)  # 早停法，防止过拟合
     # Reduce learning rate when a metric has stopped improving
-    # 当评价指标不再提升时，减少学习率
+    # 当评价指标不再提升时，减小学习率
     plateau = ReduceLROnPlateau(
         monitor="val_accuracy", verbose=1, mode='max', factor=0.5, patience=2)
     checkpoint = ModelCheckpoint('model/bertkeras_model.h5', monitor='val_accuracy', verbose=2,
